@@ -1,0 +1,95 @@
+ <!DOCTYPE html>
+
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Basic F/W test</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+	
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="800" height="600" style="border:1px solid #000000;">
+			Your browser does not support the HTML5 canvas tag.
+		</canvas>
+		
+		<script src="../../underscore-master/underscore.js"></script>
+		<script src="../../backbone-master/backbone.js"></script>
+		<script src="../../three.js/build/three.extended.js"></script>
+		<script src="../../src/actionbricks.js"></script>
+		<script src="../../src/pre-defined_action_blocks.js"></script>		
+		<script>
+			var canvas1 = document.getElementById("myCanvas");
+			var tdafw = new TDAFW({},{canvas:canvas1});
+			
+			//camera
+			camera = new THREE.PerspectiveCamera( 45, canvas1.width / canvas1.height, 1, 20000 );
+			camera.position.set( 10, 10, 30 );	
+			
+			var abstractNode1 = new TDAFW.AbstractNode();
+			abstractNode1.setTargetThreeObject(camera);
+			
+			tdafw.addToAbstractScene(abstractNode1);
+			tdafw.setDefaultCamera(camera);
+		
+			//geometry
+			var geometry = new THREE.BoxGeometry( 5, 5, 5 );
+			var cube = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( {color: 0x00ff00, side:THREE.DoubleSide} ) );
+			camera.lookAt(cube.position);
+			
+			
+			var abstractNode2 = new TDAFW.AbstractNode();
+			abstractNode2.setTargetThreeObject(cube);
+			tdafw.addToAbstractScene(abstractNode2);
+			tdafw.addToScene(cube);
+			
+			var planeGeometry =  new THREE.PlaneGeometry( 500, 500 );
+			plane1 = new THREE.Mesh( planeGeometry, new THREE.MeshPhongMaterial( { color: 0x00ffff, side:THREE.DoubleSide } ) );
+			plane1.rotation.x = Math.PI / 2;
+			plane1.position.y = -5;
+			
+			var abstractNode3 = new TDAFW.AbstractNode();
+			abstractNode3.setTargetThreeObject(plane1);
+			tdafw.addToAbstractScene(abstractNode3);
+			tdafw.addToScene(plane1);
+			
+			planeGeometry =  new THREE.PlaneGeometry( 500, 500 );
+			plane2 = new THREE.Mesh( planeGeometry, new THREE.MeshPhongMaterial( { color: 0xffffff, side:THREE.DoubleSide } ) );
+			
+			plane2.position.z = -250;
+			
+			var abstractNode4 = new TDAFW.AbstractNode();
+			abstractNode4.setTargetThreeObject(plane2);
+			tdafw.addToAbstractScene(abstractNode4);
+			tdafw.addToScene(plane2);
+			
+			//light
+			var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xffffff, 0.5 );
+			directionalLight.position.x = 0.3;
+			directionalLight.position.y = 0.2;
+			directionalLight.position.z = 0.5;
+			directionalLight.position.normalize();
+									
+			var abstractNode5 = new TDAFW.AbstractNode();
+			abstractNode5.setTargetThreeObject(directionalLight);
+			
+			tdafw.addToAbstractScene(abstractNode5);
+			tdafw.addToScene(directionalLight);
+			
+			//attach action block
+			var rotateY = new TDAFW.ActionBlocks.Rotate({"angular_velocity":{"x":0.0, "y":-2.0, "z":0.0}},{fw:tdafw});
+			abstractNode2.attachActionBlock(rotateY);
+			
+			var moveX = new TDAFW.ActionBlocks.Move({"velocity":{"x":-2.0,"y":-0.0,"z":-10.0}},{fw:tdafw});
+			//rotateY.addChild(moveX);
+			
+			var rotateZ = new TDAFW.ActionBlocks.Rotate({"angular_velocity":{"x":0.0, "y":0.0, "z":-2.0}},{fw:tdafw});
+			abstractNode2.attachActionBlock(rotateZ);			
+			
+			var stats = new TDAFW.ActionBlocks.StatsAB({},{fw:tdafw});
+			tdafw.getAbstractSceneRoot().attachActionBlock(stats);
+			//run framework
+			tdafw.run();
+			
+		</script>
+</body></html>

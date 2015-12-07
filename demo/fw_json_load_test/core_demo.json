@@ -1,0 +1,88 @@
+{
+	"version":"1.0",
+	"animationProperties" : {},
+	"abstractSceneGraph": {
+		"name": "scene1",
+		"type": "Scene",
+		"typeData":{},
+		"children": [
+			{	
+				"name":"camera1",
+				"type":"PerspectiveCamera",
+				"typeData": {
+					"parameters":{
+						"fov":45,
+						"autoAspect": true,
+						"aspect": 0,
+						"near":1,
+						"far":2000
+					},
+					"lookAt":{"x":0.0,"y":0.0,"z":0.0}
+				},
+				"position":{"x":10.0,"y":10.0,"z":30.0},
+				"rotation":{"x":0.0,"y":0.0,"z":0.0},
+				"scale":{"x":1.0,"y":1.0,"z":1.0},
+				"children": [],
+				"actionBlocks": []
+			},
+			{
+				"name":"light1",
+				"type":"DirectionalLight",
+				"typeData": {
+					"parameters": {
+						"color":16777215,
+						"intensity":0.5
+					}
+				},
+				"position":{"x":0.3,"y":0.2,"z":0.5},
+				"rotation":{"x":0.0,"y":0.0,"z":0.0},
+				"scale":{"x":1.0,"y":1.0,"z":1.0}
+			},
+			{
+				"name":"cube1",
+				"type":"ThreeMesh",
+				"typeData": {
+					"geometry":{
+						"type" : "BoxGeometry",
+						"width":5,
+						"height":5,
+						"depth":5
+					},
+					"material":{
+						"type":"MeshPhongMaterial",
+						"parameters": {
+							"color":65280
+						}
+					}
+				},
+				"position":{"x":0,"y":0,"z":0},
+				"rotation": {"x":0,"y":0,"z":0},
+				"scale": {"x":1.0,"y":1.0,"z":1.0},
+				"actionBlocks": [
+					{
+						"name":"Rotate1",
+						"type":"Rotate",
+						"attributes":{
+							"angular_velocity":{"x":0,"y":-2.0,"z":-2.0}
+						},
+						"children": []
+					}
+				]
+			}
+		],
+		"position":{"x":0.0,"y":0.0,"z":0.0},
+		"rotation":{"x":0.0,"y":0.0,"z":0.0},
+		"scale":{"x":1.0,"y":1.0,"z":1.0},
+		"actionBlocks":[
+			{
+				"name":"stats1",
+				"type":"StatsAB",
+				"attributes":{},
+				"children": []
+			}
+		]
+	},
+	
+	"internalEvents": [],
+	"externalEvents": []
+}

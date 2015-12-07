@@ -1,0 +1,125 @@
+ <!DOCTYPE html>
+
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>JSON Schema test</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+	
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="800" height="600" style="border:1px solid #000000;">
+			Your browser does not support the HTML5 canvas tag.
+		</canvas>
+		
+		<script src="../../underscore-master/underscore.js"></script>
+		<script src="../../backbone-master/backbone.js"></script>
+		<script src="../../tv4-master/tv4.js"></script>
+		<script src="../../three.js/build/three.js"></script>
+		<script src="../../three.js/examples/js/loaders/DDSLoader.js"></script>
+		<script src="../../three.js/examples/js/libs/stats.min.js"></script>
+		<script src="../../src/actionbricks.js"></script>
+		<script src="../../src/pre-defined_action_blocks.js"></script>		
+		
+		<script>
+		
+			var loadAjaxJSON = function ( url, callback, progressCallback ) {
+				var xhr = new XMLHttpRequest();
+				var length = 0;
+				xhr.onreadystatechange = function () {
+					if ( xhr.readyState === xhr.DONE ) {
+						if ( xhr.status === 200 || xhr.status === 0 ) {
+							if ( xhr.responseText ) {
+								var json = JSON.parse( xhr.responseText );
+								callback(true, json, url);
+							} else {		
+								callback(false, 'TDAFW loadAjaxJSON: "' + url + '" seems to be unreachable or the file is empty.');
+							}	
+						} else {
+							callback(false, 'TDAFW loadAjaxJSON: Couldn\'t load "' + url + '" (' + xhr.status + ')');
+						}
+					} else if ( xhr.readyState === xhr.LOADING ) {
+						if ( progressCallback ) {
+							if ( length === 0 ) {
+								length = xhr.getResponseHeader( 'Content-Length' );
+							}
+							progressCallback( { total: length, loaded: xhr.responseText.length } );
+						}
+					} else if ( xhr.readyState === xhr.HEADERS_RECEIVED ) {
+						if ( progressCallback !== undefined ) {
+							length = xhr.getResponseHeader( "Content-Length" );
+						}
+					}
+				};
+				xhr.open( "GET", url, true );
+				xhr.send( null );
+			};
+			var schema, json;
+			var jsons = [];
+			
+			function performValidation() {				
+				for (var i = 0 ; i < jsons.length; i++) {
+					console.log ("*** validation for url : " + jsons[i].url + "***");				
+					console.log ("***** validation result: " + tv4.validate(jsons[i].json, schema));
+					console.log ("***** validation error: " + JSON.stringify(tv4.error, null, 4));
+				}
+				for (var i = 0 ; i < jsons.length; i++) {	
+					jsons.pop();
+				}
+			}
+			
+			var schema_callback = function (success, result) {
+				if (success) {
+					schema = result;		
+					if (jsons.length > 0) {
+						performValidation();
+					}
+				} else {
+					console.error(result);
+				}
+			};
+			
+			var json_callback = function (success, result, url) {
+				if (success) {
+					jsons.push({url:url, json:result});
+					if (schema) {
+						performValidation();
+					}
+				} else {
+					console.error(result);
+				}
+			};
+			
+			loadAjaxJSON("../../src/fw/tda_schema.js", schema_callback, undefined);
+			
+			//loadAjaxJSON("./test_json1.js", json_callback, undefined);	
+			loadAjaxJSON("../fw_binary_load_test/test_json2.js", json_callback, undefined);	
+			loadAjaxJSON("../fw_collada_model_test/test_json2.js", json_callback, undefined);	
+			loadAjaxJSON("../fw_json_load_test/test_json2.js", json_callback, undefined);	
+			loadAjaxJSON("../fw_obj_model_test/test_json2.js", json_callback, undefined);
+			loadAjaxJSON("../fw_obj_mtl_model_test/test_json2.js", json_callback, undefined);
+			loadAjaxJSON("../fw_orbitcontrols_test/test_json2.js", json_callback, undefined);
+			loadAjaxJSON("../fw_picking_test/test_json2.js", json_callback, undefined);
+			loadAjaxJSON("../fw_spring_action_test/test_json2.js", json_callback, undefined);
+			loadAjaxJSON("../fw_trace_action_test/test_json2.js", json_callback, undefined);
+			loadAjaxJSON("../fw_marching_cubes_test/test_json2.js", json_callback, undefined);
+			loadAjaxJSON("../fw_splinetracking_action_test/test_json2.js", json_callback, undefined);
+			
+			
+			
+			//loadAjaxJSON("./test_schema1.js", schema_callback, undefined);		
+			//loadAjaxJSON("./test_json2.js", json_callback, undefined);	
+
+
+			/*
+			var canvas1 = document.getElementById("myCanvas");
+			var tdafw = new TDAFW({},{canvas:canvas1});
+			
+			tdafw.loadScene("./test_json1.js",function (success, result) {
+				if(success) {
+					tdafw.run();
+				}			
+			});*/
+		</script>
+</body></html>

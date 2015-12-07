@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+
+  <Folder>
+    <name>MillerPark</name>
+    <description>Created with &lt;a href="http://sketchup.google.com"&gt;Google SketchUp&lt;/a&gt;</description>
+    <visibility>1</visibility>
+    <LookAt>
+      <heading>112.1752770911</heading>
+      <tilt>40.78029712369</tilt>
+      <latitude>43.02822464062</latitude>
+      <longitude>-87.97089209363</longitude>
+      <range>473.5453989964</range>
+      <altitude>330.569276067</altitude>
+    </LookAt>
+    <Folder>
+      <name>Tour</name>
+      <Placemark>
+        <name>Scene 1</name>
+        <visibility>1</visibility>
+        <LookAt>
+          <heading>112.1752770911</heading>
+          <tilt>40.78029712369</tilt>
+          <latitude>43.02822464062</latitude>
+          <longitude>-87.97089209363</longitude>
+          <range>473.5453989964</range>
+          <altitude>330.569276067</altitude>
+        </LookAt>
+      </Placemark>
+    </Folder>
+    <Placemark>
+      <name>Model</name>
+      <description></description>
+      <Style id="default"/>
+      <Model>
+        <altitudeMode>relativeToGround</altitudeMode>
+        <Location>
+          <latitude>43.02809</latitude>
+          <longitude>-87.971129</longitude>
+          <altitude>0</altitude>
+        </Location>
+        <Orientation>
+          <heading>359.3372059722</heading>
+          <tilt>0</tilt>
+          <roll>0</roll>
+        </Orientation>
+        <Scale>
+          <x>1</x>
+          <y>1</y>
+          <z>1</z>
+        </Scale>
+        <Link>
+          <href>models/untitled.dae</href>
+        </Link>
+      </Model>
+    </Placemark>
+  </Folder>
+
+</kml>
